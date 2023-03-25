@@ -27,8 +27,8 @@ app.get("/url", async (req, res) => {
   });
 
   const byteFile = getByteArray(__dirname + "/screenshot.jpg");
-  // res.sendFile(__dirname + "/screenshot.jpg");
-  res.json(byteFile)
+  res.sendFile(__dirname + "/screenshot.jpg");
+  // res.json(byteFile)
   console.log("sent");
   browser.close();
 });
