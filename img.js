@@ -30,7 +30,6 @@ app.get("/url.jpg", async (req, res) => {
   var scrnsht = await page.screenshot({
     path: "screenshot.jpg",
   });
-
   const byteFile = getByteArray(__dirname + "/screenshot.jpg");
   res.sendFile(__dirname + "/screenshot.jpg");
   // res.json(byteFile)
@@ -68,7 +67,7 @@ app.get("/keybind.jpg", async (req, res) => {
     await page.keyboard.down("ControlLeft")
     console.log("CTRL")
   }
-  
+
   await page.keyboard.press(`Key${key.toUpperCase()}`)
   if (shift == "true") {
     await page.keyboard.up("ShiftLeft")
