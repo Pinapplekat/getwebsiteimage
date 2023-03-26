@@ -68,6 +68,7 @@ app.get("/keybind.jpg", async (req, res) => {
     await page.keyboard.down("ControlLeft")
     console.log("CTRL")
   }
+  
   await page.keyboard.press(`Key${key.toUpperCase()}`)
   if (shift == "true") {
     await page.keyboard.up("ShiftLeft")
