@@ -30,7 +30,7 @@ app.get("/url.jpg", async (req, res) => {
   var scrnsht = await page.screenshot({
     path: "screenshot.jpg",
   });
-  
+
   const byteFile = getByteArray(__dirname + "/screenshot.jpg");
   res.sendFile(__dirname + "/screenshot.jpg");
   // res.json(byteFile)
