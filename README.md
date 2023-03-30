@@ -30,3 +30,9 @@ Example: `http://127.0.0.1/url.jpg?url=example.com&byte=true`
 ### Linux
 Run the command `sudo apt-get update` to update the dependencies then `sudo apt install libnss3-dev libgdk-pixbuf2.0-dev libgtk-3-dev libxss-dev libatk-bridge2.0-0` to install the required dependencies to run puppeteer.  
 We made this easy so you can just type `npm run linux` to fix the issue. This command will first do exactly what we did up there, then install all npm packages, the proceed to run the server on port 3000.
+### Windows/Mac
+Make sure you have the latest version of [node.js](https://nodejs.org/) installed.  
+If you do, make sure you have updated and installed the packages. You can quickly doing this by running the script: `npm run fresh` or `npm run fresh-dev`   
+## Developer
+Running `npm run dev` will start a nodemon process to automatically refresh the server for easy development.  
+You can quickly run dev from any other command by adding `-dev` at the end. Example: `npm run linux-dev` or `npm run fresh-dev`
