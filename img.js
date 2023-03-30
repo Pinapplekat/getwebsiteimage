@@ -13,100 +13,113 @@ const express = require("express");
 const puppeteer = require("puppeteer");
 const app = express();
 const port = 3000;
-async function start() {
+async function start(url, viewport) {
   browser = await puppeteer.launch();
   page = await browser.newPage();
-  await page.setViewport({ width: 1920, height: 1080 });
-  await page.goto('https://google.com/', { waitUntil: "networkidle0" });
+  openurl(url, viewport)
 }
-start()
+async function changeViewport(viewport) {
+  if (typeof viewport == 'string') {
+
+  }
+  await page.setViewport(viewport);
+}
+async function openurl(url, viewport, res, byte) {
+  try {
+    if (!viewport) viewport = "1920x1080"
+    viewport = {
+      width: parseInt(viewport.split("x")[0]),
+      height: parseInt(viewport.split("x")[1])
+    }
+    if (!viewport.width || !viewport.height) {
+      var err = "Not a valid viewport property, it should look like 'WIDTHxHEIGHT'"
+      res.status(400).send(err)
+      throw new Error(err)
+    }
+    console.log(viewport)
+    await page.setViewport(viewport);
+    if (url) {
+      if (!url.startsWith("http")) url = 'https://' + url
+      await page.goto(url, { waitUntil: "networkidle0" })
+    };
+    var scrnsht = await page.screenshot({
+      path: "screenshot.jpg",
+    });
+    if (byte?.toLowerCase() == "true") {
+      const byteFile = getByteArray(__dirname + "/screenshot.jpg");
+      if (res) return res.send(byteFile)
+    }
+    if (res) {
+      res.sendFile(__dirname + "/screenshot.jpg");
+    }
+  } catch (err) {
+    console.error(err)
+  }
+}
+start('https://google.com/', "1920x1080")
 app.get("/url.jpg", async (req, res) => {
   console.log("REQUEST RECIEVED");
   var { url, viewport, byte } = req.query;
-  if(!viewport) viewport = "1920x1080"
-  viewport = {
-    width: viewport.split("x")[0],
-    height: viewport.split("x")[1]
-  }
-  console.log(viewport)
-  if(!viewport.width || !viewport.height) res.send("Not a valid viewport property, they should look like '1920x1080'")
-  url = 'https://' + url
-  console.log(url)
-  await page.setViewport({ width: parseInt(viewport.width), height: parseInt(viewport.height) });
-  await page.goto(url, { waitUntil: "networkidle0" });
-  var scrnsht = await page.screenshot({
-    path: "screenshot.jpg",
-  });
 
-  
-  const byteFile = getByteArray(__dirname + "/screenshot.jpg");
-  if(byte?.toLowerCase() == "true"){
-    res.send(byteFile)
-  }
-  else res.sendFile(__dirname + "/screenshot.jpg");
+  openurl(url, viewport, res, byte)
+  // else res.sendFile(__dirname + "/screenshot.jpg");
   // res.json(byteFile)
   console.log("sent");
   // browser.close();
 });
 app.get("/key.jpg", async (req, res) => {
-  var { keycode } = req.query
-  await page.keyboard.press(keycode, { waitUntil: "networkidle0" })
-  var scrnsht = await page.screenshot({
-    path: "screenshot.jpg",
-  });
+  try {
+    var { keycode, byte, viewport } = req.query
+    await page.keyboard.press(keycode, { waitUntil: "networkidle0" })
 
-  const byteFile = getByteArray(__dirname + "/screenshot.jpg");
-  res.sendFile(__dirname + "/screenshot.jpg");
+    openurl(url=null, viewport=viewport, res=res, byte=byte)
+  } catch (err) {
+    console.error(err)
+    res.send(err)
+  }
 })
 app.get("/type.jpg", async (req, res) => {
-  var { text } = req.query
+  var { text, byte, viewport } = req.query
   await page.keyboard.type(text, { waitUntil: "networkidle0" })
-  var scrnsht = await page.screenshot({
-    path: "screenshot.jpg",
-  });
-
-  const byteFile = getByteArray(__dirname + "/screenshot.jpg");
-  res.sendFile(__dirname + "/screenshot.jpg");
+  openurl(url=null, viewport=viewport, res=res, byte=byte)
 })
 app.get("/keybind.jpg", async (req, res) => {
-  var { key, shift, control } = req.query
-  console.log(shift,control)
-  if (shift == "true") {
-    await page.keyboard.down("ShiftLeft")
-    console.log("SHIFT")
-  }
-  if (control == "true") {
-    await page.keyboard.down("ControlLeft")
-    console.log("CTRL")
-  }
+  try {
+    var { key, shift, control, byte, viewport } = req.query
+    console.log(shift, control)
+    if (shift == "true") {
+      await page.keyboard.down("ShiftLeft")
+      console.log("SHIFT")
+    }
+    if (control == "true") {
+      await page.keyboard.down("ControlLeft")
+      console.log("CTRL")
+    }
 
-  await page.keyboard.press(`Key${key.toUpperCase()}`)
-  if (shift == "true") {
-    await page.keyboard.up("ShiftLeft")
-  }
-  if (control == "true") {
-    await page.keyboard.up("ControlLeft")
-  }
-  var scrnsht = await page.screenshot({
-    path: "screenshot.jpg",
-  });
+    await page.keyboard.press(`Key${key.toUpperCase()}`)
+    if (shift == "true") {
+      await page.keyboard.up("ShiftLeft")
+    }
+    if (control == "true") {
+      await page.keyboard.up("ControlLeft")
+    }
+    openurl(url=null, viewport=viewport, res=res, byte=byte)
 
-  const byteFile = getByteArray(__dirname + "/screenshot.jpg");
-  res.sendFile(__dirname + "/screenshot.jpg");
+  } catch (err) {
+    console.error(err)
+    res.send(err)
+  }
 })
 app.get("/screenshot.jpg", async (req, res) => {
-  var scrnsht = await page.screenshot({
-    path: "screenshot.jpg",
-  });
-
-  const byteFile = getByteArray(__dirname + "/screenshot.jpg");
-  res.sendFile(__dirname + "/screenshot.jpg");
+  var { byte, viewport } = req.query
+  openurl(url=null, viewport=viewport, res=res, byte=byte)
 })
 app.get("/close", (req, res) => {
   browser.close()
+  res.send("Closed the browswer.")
 })
-app.get("/test", (req, res) => {
-  res.send("TEST");
+app.get("/", (req, res) => {
+  res.send('use /url.jpg or other. \n visit <a href="https://github.com/pinapplekat/getwebsiteimage/">the github</a> for more information');
 });
 app.listen(port, () => {
   console.log(`app listening on port ${port}`);
