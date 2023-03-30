@@ -16,10 +16,15 @@ To send a whole string all you have to do is send a get request to `http://127.0
 ### Request specific viewport
 When sending a request you can add the paramater `viewport=` to the `/url.jpg` request.
 Example: `http://127.0.0.1/url.jpg?url=example.com&viewport=1920x1080`
+
+![image](https://user-images.githubusercontent.com/58854416/228946407-487c88e2-5e5d-470e-ab70-c58a4ea4d272.png)
+
 ### Returning image as a byte array
 To do this you simply have to add the paramater `byte=true` to the `/url.jpg` request.
 Example: `http://127.0.0.1/url.jpg?url=example.com&byte=true`
+
 ![image](https://user-images.githubusercontent.com/58854416/228943631-c0efe662-a108-4c13-b6f9-32b232d5af86.png)
+
 ## Not running?
 ### Linux (Ubuntu)
 Run the command `sudo apt-get update` to update the dependencies then `sudo apt install libnss3-dev libgdk-pixbuf2.0-dev libgtk-3-dev libxss-dev libatk-bridge2.0-0` to install the required dependencies to run puppeteer.
