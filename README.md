@@ -15,13 +15,13 @@ Set `shift=` to `true` to send the shift key, same goes for `control=`
 ### Send a whole string
 To send a whole string all you have to do is send a get request to `http://127.0.0.1/type.jpg?text=your string`
 ### Request specific viewport
-When sending a request you can add the paramater `viewport=` to the `/url.jpg` request.  
+When sending a request you can add the paramater `viewport=` to any request.  
 Example: `http://127.0.0.1/url.jpg?url=example.com&viewport=1920x1080`
 
 ![image](https://user-images.githubusercontent.com/58854416/228946407-487c88e2-5e5d-470e-ab70-c58a4ea4d272.png)
 
 ### Returning image as a byte array
-To do this you simply have to add the paramater `byte=true` to the `/url.jpg` request.  
+To do this you simply have to add the paramater `byte=true` to any request.  
 Example: `http://127.0.0.1/url.jpg?url=example.com&byte=true`
 
 ![image](https://user-images.githubusercontent.com/58854416/228943631-c0efe662-a108-4c13-b6f9-32b232d5af86.png)
