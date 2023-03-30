@@ -22,17 +22,28 @@ async function start() {
 start()
 app.get("/url.jpg", async (req, res) => {
   console.log("REQUEST RECIEVED");
-  var { url } = req.query;
+  var { url, viewport, byte } = req.query;
+  if(!viewport) viewport = "1920x1080"
+  viewport = {
+    width: viewport.split("x")[0],
+    height: viewport.split("x")[1]
+  }
+  console.log(viewport)
+  if(!viewport.width || !viewport.height) res.send("Not a valid viewport property, they should look like '1920x1080'")
   url = 'https://' + url
   console.log(url)
-  await page.setViewport({ width: 2560, height: 1440 });
+  await page.setViewport({ width: parseInt(viewport.width), height: parseInt(viewport.height) });
   await page.goto(url, { waitUntil: "networkidle0" });
   var scrnsht = await page.screenshot({
     path: "screenshot.jpg",
   });
 
+  
   const byteFile = getByteArray(__dirname + "/screenshot.jpg");
-  res.sendFile(__dirname + "/screenshot.jpg");
+  if(byte?.toLowerCase() == "true"){
+    res.send(byteFile)
+  }
+  else res.sendFile(__dirname + "/screenshot.jpg");
   // res.json(byteFile)
   console.log("sent");
   // browser.close();

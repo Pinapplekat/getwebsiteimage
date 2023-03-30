@@ -14,7 +14,7 @@
     "filereader": "^0.10.3",
     "formidable": "^2.1.1",
     "get-file-object-from-local-path": "^1.0.2",
-    "puppeteer": "^19.8.0"
+    "puppeteer": "^19.8.2"
   },
   "description": ""
 }
