@@ -1,9 +1,14 @@
 {
-  "name": "python-codes",
+  "name": "getwebsiteimage",
   "version": "1.0.0",
   "main": "img.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node .",
+    "fresh": "npm install && node node_modules/puppeteer/install.js && npm run start",
+    "fresh-dev": "npm install && node node_modules/puppeteer/install.js && npm run dev",
+    "dev": "nodemon .",
+    "linux": "sudo apt-get update && sudo apt install libnss3-dev libgdk-pixbuf2.0-dev libgtk-3-dev libxss-dev libatk-bridge2.0-0 && npm run fresh",
+    "linux-dev": "sudo apt-get update && sudo apt install libnss3-dev libgdk-pixbuf2.0-dev libgtk-3-dev libxss-dev libatk-bridge2.0-0 && npm run fresh-dev"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +19,7 @@
     "filereader": "^0.10.3",
     "formidable": "^2.1.1",
     "get-file-object-from-local-path": "^1.0.2",
+    "nodemon": "^2.0.22",
     "puppeteer": "^19.8.2"
   },
   "description": ""
