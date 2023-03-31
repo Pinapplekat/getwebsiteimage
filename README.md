@@ -7,24 +7,24 @@ Run the command `npm install` and wait for it to install dependencies.
 Or just run `npm run fresh` while in the folder, `npm run linux` on most linux devices  
 Once finished, simply run `node .` and the web server will be up and ready to be connected to.
 ### Go to website
-Simply making a GET request to `http://127.0.0.1:3000/url.jpg?url=your url` would return a screenshot of that website.
+Simply making a GET request to `http://localhost:3000/url.jpg?url=your url` would return a screenshot of that website.
 ### Use keys & keybinds
-To send a key you can send a request to `http://127.0.0.1:3000/keybind.jpg?key=A&shift=true&control=true`  
+To send a key you can send a request to `http://localhost:3000/keybind.jpg?key=A&shift=true&control=true`  
 `key=` meaning the character that you would like to send, for example `key=v` or `key=c`.  
 Set `shift=` to `true` to send the shift key, same goes for `control=`
 ### Send a whole string
-To send a whole string all you have to do is send a get request to `http://127.0.0.1/type.jpg?text=your string`
+To send a whole string all you have to do is send a get request to `http://localhost:3000/type.jpg?text=your string`
 ### Request a screenshot of whatevers on the screen right now
 Simply make a request to `http://localhost:3000/screenshot.jpg`
 ### Request specific viewport
 When sending a request you can add the paramater `viewport=` to any request.  
-Example: `http://127.0.0.1/url.jpg?url=example.com&viewport=1920x1080`  
+Example: `http://localhost:3000/url.jpg?url=example.com&viewport=1920x1080`  
 
 ![image](https://user-images.githubusercontent.com/58854416/228946407-487c88e2-5e5d-470e-ab70-c58a4ea4d272.png)  
 
 ### Returning image as a byte array
 To do this you simply have to add the paramater `byte=true` to any request.  
-Example: `http://127.0.0.1/url.jpg?url=example.com&byte=true`  
+Example: `http://localhost:3000/url.jpg?url=example.com&byte=true`  
 
 ![image](https://user-images.githubusercontent.com/58854416/228943631-c0efe662-a108-4c13-b6f9-32b232d5af86.png)  
 
