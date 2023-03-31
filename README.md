@@ -18,6 +18,7 @@ To send a whole string all you have to do is send a get request to `http://local
 Simply make a request to `http://localhost:3000/screenshot.jpg`
 ### Request specific viewport
 When sending a request you can add the paramater `viewport=` to any request.  
+There are no limits to the size of the viewport  
 Example: `http://localhost:3000/url.jpg?url=example.com&viewport=1920x1080`  
 
 ![image](https://user-images.githubusercontent.com/58854416/228946407-487c88e2-5e5d-470e-ab70-c58a4ea4d272.png)  
